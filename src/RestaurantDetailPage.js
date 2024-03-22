@@ -48,7 +48,7 @@ function RestauranTableCelletailPage() {
     // )
     // 本番用
     const response = await fetch(
-      `http://${process.env.REACT_APP_IP}/restaurant?month=${monthvalue}&restaurant_id=${restaurant_info.RestaurantID}`
+      `${process.env.REACT_APP_IP}/restaurant?month=${monthvalue}&restaurant_id=${restaurant_info.RestaurantID}`
     )
     const data = await response.json()
     setRestaurantData(data)

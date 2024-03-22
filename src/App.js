@@ -35,9 +35,14 @@ function App() {
     //   }&position_longitude=${position["lng"]}&radius=${radius}`
     // )
 
+    console.log(process.env.REACT_APP_IP)
+    const x = `${process.env.REACT_APP_IP}/restaurants?month=${monthvalue}&genre=${category}&minbudget=${minbudget}&maxbudget=${maxbudget}&time=${checked ? "dinner" : "lunch"
+      }&seasonalfoodname=${seasonalfoodname}&position_latitude=${position["lat"]
+      }&position_longitude=${position["lng"]}&radius=${radius}`;
+    console.log(x);
     // 本番用
     const response = await fetch(
-      `http://${process.env.REACT_APP_IP}/restaurants?month=${monthvalue}&genre=${category}&minbudget=${minbudget}&maxbudget=${maxbudget}&time=${
+      `${process.env.REACT_APP_IP}/restaurants?month=${monthvalue}&genre=${category}&minbudget=${minbudget}&maxbudget=${maxbudget}&time=${
         checked ? "dinner" : "lunch"
       }&seasonalfoodname=${seasonalfoodname}&position_latitude=${
         position["lat"]
