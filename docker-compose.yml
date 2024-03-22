@@ -1,0 +1,11 @@
+services:
+  react:
+    image: node:20.1.0
+    container_name: react
+    tty: true
+    volumes:
+      - ./:/app/react
+    working_dir: /app/react
+    command: sh -c "npm install && npm start"
+    ports:
+      - 8064:8064
