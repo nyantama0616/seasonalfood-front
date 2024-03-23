@@ -8,8 +8,10 @@ import Box from "@mui/material/Box"
 import OutlinedInput from "@mui/material/OutlinedInput"
 import InputAdornment from "@mui/material/InputAdornment"
 import Swichbutton from "./swichbutton"
+import Switch from "@mui/material/Switch"
 import Typography from "@mui/material/Typography"
 import Slider from "@mui/material/Slider"
+import MonthFoodData from "./month_food.json"
 
 function CustomForm(props) {
   const category = [
@@ -180,63 +182,9 @@ function CustomForm(props) {
     "社員食堂",
   ]
 
-  const seasonalfoodnameList = [
-    "ホタテガイ",
-    "エビ",
-    "エゾアワビ",
-    "サクラマス",
-    "ウニ",
-    "クロマグロ",
-    "タコ",
-    "イカ",
-    "ウバガイ",
-    "ブリ",
-    "サケ",
-    "ズワイガニ",
-    "キチジ",
-    "ニシン",
-    "ヒラメ",
-    "サンマ",
-    "マナマコ",
-    "ベニザケ",
-    "ホッケ",
-    "アイナメ",
-    "マツカワ",
-    "カラフトマス",
-    "エゾバフンウニ",
-    "タラバガニ",
-    "シャコ",
-    "ガゴメ",
-    "ヤリイカ",
-    "スルメイカ",
-    "シシャモ",
-    "マガキ",
-    "キアンコウ",
-    "アサリ",
-    "ケガニ",
-    "シラウオ",
-    "イトウ",
-    "キュウリウオ",
-    "マボヤ",
-    "アユ",
-    "ババガレイ",
-    "マイワシ",
-    "ホテイウオ",
-    "マダラ",
-    "イカナゴ",
-    "ワカサギ",
-    "キタムラサキウニ",
-    "コマイ",
-    "ヤマトシジミ",
-    "マアナゴ",
-    "スケトウダラ",
-    "ハタハタ",
-    "マコガレイ",
-    "オオサガ",
-    "ドジョウ",
-    "キツネメバル",
-    "クロソイ",
-  ]
+  // month_food.jsonの読み込み
+
+  const seasonalfoodnameList = MonthFoodData["foodname"]
 
   const menuitemlist = category.map((i) => <MenuItem value={i}>{i}</MenuItem>)
 
@@ -318,7 +266,7 @@ function CustomForm(props) {
             label="seasonalfoodname"
           >
             <MenuItem value={""}>{"選択なし"}</MenuItem>
-            {seasonalfoodnameList.map((i) => (
+            {seasonalfoodnameList[props.monthvalue - 1].map((i) => (
               <MenuItem value={i}>{i}</MenuItem>
             ))}
           </Select>
@@ -385,7 +333,7 @@ function CustomForm(props) {
             予算
           </Typography>
           <Slider
-            sx={{ m: 1, width: "90%" }}
+            sx={{ m: 1, width: "90%", maxWidth: "300px" }}
             getAriaLabel={() => "Minimum distance"}
             value={[props.minbudget, props.maxbudget]}
             onChange={props.onRangeBudgetChange}
@@ -434,21 +382,68 @@ function CustomForm(props) {
         value={props.value3}
         onChange={props.handleChange3}
       />
+      {props.kirikae ? (
+        <InterestSlider
+          disable={props.kirikae}
+          text="産地にこだわっている（厳しめのフィルター）"
+          value={props.kakriuke_rate}
+          onChange={props.handleChangeKakriukeRate}
+        />
+      ) : (
+        <InterestSlider
+          disable={!props.kirikae}
+          text="産地にこだわっている（緩めのフィルター）"
+          value={props.BERT_rate}
+          onChange={props.handleChangeBERTRate}
+        />
+      )}
       <InterestSlider
-        text="地元ならではの食材が有名"
-        value={props.value4}
-        onChange={props.handleChange4}
-      />
-      <InterestSlider
-        text="地元ならではの食材を多く使用している"
+        text="地元ならではの食材で有名"
         value={props.value5}
         onChange={props.handleChange5}
       />
+      <InterestSlider
+        text="地元住民がよく行く"
+        value={props.local_rate}
+        onChange={props.handleChangeLocalRate}
+      />
+      <InterestSlider
+        text="観光客がよく行く"
+        value={props.zenkoku_rate}
+        onChange={props.handleChangeZenkokuRate}
+      />
+
       <InterestSlider
         text="人気がある"
         value={props.value6}
         onChange={props.handleChange6}
       />
+      {/* 線をいれる */}
+      <div
+        style={{
+          width: "100%",
+          height: "1px",
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          mt: 1,
+        }}
+      />
+      <InputLabel id="demo-simple-select-swich" sx={{ m: 1, mt: 2 }}>
+        「産地にこだわっている」の手法切り替え
+      </InputLabel>
+      <Switch
+        id="demo-simple-select-swich"
+        value={props.kirikae}
+        onChange={props.handlekirikae}
+      />
+      <Typography>
+        {props.kirikae ? "厳しめのフィルター" : "緩めのフィルター"}
+        を使用しています
+      </Typography>
+      <Typography>
+        {props.kirikae
+          ? "精度を重視してレビューにある地名の数から予測しています"
+          : "網羅性を重視してレビューにある地名の数から予測しています"}
+      </Typography>
     </Box>
   )
 }
