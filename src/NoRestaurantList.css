@@ -1,0 +1,13 @@
+.norestpage {
+  color: #62606098;
+  /* 上下中央寄せ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* 列で表示 */
+  flex-direction: column;
+  padding: 20px;
+  margin: auto;
+  height: 40rem;
+  text-align: center;
+}

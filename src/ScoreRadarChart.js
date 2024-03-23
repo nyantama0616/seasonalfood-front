@@ -21,8 +21,13 @@ export default function ScoreRadarChart(props) {
       fullMark: 5,
     },
     {
-      subject: "地元の食材で有名",
-      A: props.local_food_fav,
+      subject: "産地にこだわっている(厳しめ)",
+      A: props.kakariuke,
+      fullMark: 5,
+    },
+    {
+      subject: "産地にこだわっている(緩め)",
+      A: props.BERT,
       fullMark: 5,
     },
     {
@@ -35,6 +40,8 @@ export default function ScoreRadarChart(props) {
       A: props.seasonal_food_short,
       fullMark: 5,
     },
+    { subject: "地元住民がよく行く", A: props.seasonal_food_num, fullMark: 5 },
+    { subject: "観光客がよく行く", A: props.zenkokuRate, fullMark: 5 },
     {
       subject: "人気がある",
       A: props.populer,

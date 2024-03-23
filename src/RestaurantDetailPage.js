@@ -19,6 +19,7 @@ import {
   TableCell,
   createTheme,
   ThemeProvider,
+  Link,
 } from "@mui/material"
 
 const theme = createTheme({
@@ -134,6 +135,30 @@ function RestauranTableCelletailPage() {
                         : "~" + restaurant_data.StoreDinnerPriceRange + "円"}
                     </TableCell>
                   </TableRow>
+                  {/* <TableRow>
+                    <TableCell>食べログリンク</TableCell>
+                    <TableCell>
+                      {restaurant_data.TabelogURL === "" ? (
+                        "-"
+                      ) : (
+                        <Link href={restaurant_data.TabelogURL}>
+                          {restaurant_data.TabelogURL}
+                        </Link>
+                      )}
+                    </TableCell>
+                  </TableRow> */}
+                  <TableRow>
+                    <TableCell>公式サイト</TableCell>
+                    <TableCell>
+                      {restaurant_data.StoreHomepage === "" ? (
+                        "-"
+                      ) : (
+                        <Link href={restaurant_data.StoreHomepage}>
+                          {restaurant_data.StoreHomepage}
+                        </Link>
+                      )}
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
@@ -191,6 +216,10 @@ function RestauranTableCelletailPage() {
                 seasonal_food_fav={restaurant_data.RestaurantSeasonalPopular}
                 seasonal_food_short={restaurant_data.RestaurantSeasonalShort}
                 populer={restaurant_data.RestaurantSeasonalCount}
+                zenkokuRate={restaurant_data.RestaurantLocalRate}
+                localRate={restaurant_data.RestaurantZenkokuRate}
+                BERT={restaurant_data.NewRestaurantLocalPopularBERT}
+                kakariuke={restaurant_data.NewRestaurantLocalPopularKakariuke}
               />
             </Grid>
           </Grid>
@@ -198,7 +227,7 @@ function RestauranTableCelletailPage() {
         <Divider />
         <Box sx={{ p: 2 }}>
           <Typography variant="h4" sx={{ pb: 2 }}>
-            代表的なレビュー
+            産地にこだわりがある表現を含むレビュー
           </Typography>
           {restaurant_data.RepresentativeReview.map((i) => {
             return (

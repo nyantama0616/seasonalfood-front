@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import RestaurantList from "./RestaurantList"
 import Box from "@mui/material/Box"
+import NoRestaurantList from "./NoRestaurantList"
 
 const RestaurantListPage = (props) => {
   const restaurant_info = props.restaurant_info
@@ -28,15 +29,11 @@ const RestaurantListPage = (props) => {
   useEffect(() => {
     // props.restaurants_infoが変更されたときに呼び出される
     if (itemRefs.current[props.selectedRestaurant]) {
-      console.log("scroll")
       itemRefs.current[props.selectedRestaurant].scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       })
     }
-
-    console.log("useeffect")
-    console.log(itemRefs.current[props.selectedRestaurant])
   }, [props.selectedRestaurant])
 
   return (
@@ -44,11 +41,12 @@ const RestaurantListPage = (props) => {
       sx={{
         display: "flex",
         flexWrap: "wrap",
+        alignContent: "flex-start",
         height: "100vh",
         overflow: "scroll",
       }}
     >
-      {restaurant_list}
+      {restaurant_info.length !== 0 ? restaurant_list : <NoRestaurantList />}
     </Box>
   )
 }
