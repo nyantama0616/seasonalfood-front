@@ -1,0 +1,3 @@
+[submodule "seasonalfood-backend"]
+	path = seasonalfood-backend
+	url = https://github.com/nyantama0616/seasonalfood-backend

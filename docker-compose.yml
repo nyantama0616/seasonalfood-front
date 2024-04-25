@@ -1,11 +1,44 @@
 services:
-  react:
+  front:
     image: node:20.1.0
-    container_name: react
     tty: true
     volumes:
       - ./:/app/react
     working_dir: /app/react
     command: sh -c "npm install && npm start"
     ports:
-      - 8064:8064
+      - 8064:3000
+  
+  back:
+    build:
+      context: ./seasonalfood-backend
+      dockerfile: app.dockerfile
+    tty: true
+    ports:
+      - 10000:10000
+    depends_on:
+      - postgresql
+    volumes:
+      - ./seasonalfood-backend:/app
+    command: go run main.go
+
+  postgresql:
+    image: postgres:13-alpine
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "seasonalfood"
+
+    ports:
+      - "5432:5432"
+    networks:
+      - default
+
+# networks:
+#   default:
+
+volumes:
+  # mysql_data:
+  postgresql-data:
